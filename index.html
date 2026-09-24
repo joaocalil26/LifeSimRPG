@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game</title>
+    
+    <!-- CSS Externo e Local -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- JS Externo e Local -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="assets/js/script.js" defer></script>
+</head>
+<body>
+
+    <div class="container">
+        <div class="game-wrapper">
+
+            <!-- Painel do Tutorial (Esquerda) -->
+            <aside class="tutorial-card">
+                <h2>🎮 COMO JOGAR</h2>
+                
+                <div class="tutorial-step">
+                    <span class="step-icon">💼</span>
+                    <div>
+                        <strong>Empregos</strong>
+                        <p>Escolha uma profissão. O salário entra automaticamente a cada ciclo de tempo.</p>
+                        <p>Trabalhe conforme os eventos aleatórios forem aparecendo.</p>
+                    </div>
+                </div>
+
+                <div class="tutorial-step">
+                    <span class="step-icon">🍕</span>
+                    <div>
+                        <strong>Status</strong>
+                        <p>Fome e Sono caem com o tempo. Use o Mercado/Comer para não perder Vida.</p>
+                    </div>
+                </div>
+
+                <div class="tutorial-step">
+                    <span class="step-icon">💊</span>
+                    <div>
+                        <strong>Remédios</strong>
+                        <p>Atenção aos alertas de doença! Tome remédio rápido antes de zerar a vida.</p>
+                    </div>
+                </div>
+
+                <div class="tutorial-step">
+                    <span class="step-icon">💀</span>
+                    <div>
+                        <strong>Sobrevivência</strong>
+                        <p>Se a Vida chegar a 0%, é Game Over. Veja quantos dias você consegue durar!</p>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Área Principal do Jogo -->
+            <main class="game">
+
+                <header class="header">
+                    <div class="top-stats">
+                        <div class="life-container" aria-label="Vida">
+                            <div class="life-fill" id="lifeFill" style="width: 100%;">
+                                <span class="titlebarra" id="lifebar">Vida: 100%</span>
+                            </div>
+                        </div>
+
+                        <div class="hungry-container" aria-label="Fome">
+                            <div class="hungry-fill" id="hungryFill" style="width: 100%;">
+                                <span class="titlebarra" id="hungrybar">Fome: 100%</span>
+                            </div>
+                        </div>
+
+                        <div class="sleep-container" aria-label="Sono">
+                            <div class="sleep-fill" id="sleepFill" style="width: 100%;">
+                                <span class="titlebarra" id="sleepbar">Sono: 100%</span>
+                            </div>
+                        </div>
+
+                        <div class="doente-container">
+                            <p class="doenteupdate" id="doencaTexto">🤒: Nenhuma</p>
+                        </div>
+
+                        <div class="day-container">
+                            <p class="dayupdate">📆 Dia: 0</p>
+                        </div>
+                    </div>
+
+                    <div class="info">
+                        <span class="money">Dinheiro: <strong id="dinheiro" style="color: green;">R$ 0</strong></span>
+                        <img src="assets/images/logo3.png" alt="Life Sim Logo" class="game-logo-img">
+                        <span class="job">Profissão: <strong id="profissao" style="color: brown;">Desempregado</strong></span>
+                    </div>
+                </header>
+
+                <div class="main-area">
+                    <!-- Conteúdo dinâmico principal do jogo -->
+                </div>
+
+                <!-- Painel de Ações -->
+                <div class="actions">
+                    <button id="fazerTrabalho">Trabalhar</button>
+                    <button id="trabalhar">Empregos</button>
+                    <button id="descansar">Dormir</button>
+                    <button id="comer">Comer</button>
+                    <button id="mercado">Mercado</button>
+                    <button id="remedio">Tomar Remédio</button>
+                    <button id="loja">Loja</button>
+                    <button id="geladeira">Geladeira</button>
+                </div>
+
+                <!-- Tela de Game Over -->
+                <div id="gameOverScreen" style="font-family: 'Oswald', sans-serif; display: none; text-align: center; margin-top: 20px; background: rgba(0,0,0,0.8); color: white; padding: 10px; border-radius: 10px;">
+                    <h2>Game Over! 💀</h2>
+                    <p>Seu personagem não resistiu.</p>
+                    <button onclick="reiniciarJogo()" id="gameover">Jogar Novamente</button>
+                </div>
+
+            </main>
+
+        </div>
+    </div>
+
+    <!-- MODAIS DO JOGO -->
+<div id="modalJogo" class="modal-overlay hidden">
+    <div class="modal-container">
+        <button class="btn-close-modal" id="fecharModalJogo" type="button">&times;</button>
+        <div class="modal-header">
+            <h2 id="modalTitulo">Life Sim</h2>
+        </div>
+        <div class="modal-body" id="modalConteudo">
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

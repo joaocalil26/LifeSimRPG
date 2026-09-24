@@ -1,0 +1,7 @@
+O ? : em JavaScript é o operador condicional ternário, uma forma curta e direta de escrever uma estrutura if / else.
+
+condição ? valorSeVerdadeiro : valorSeFalso
+
+condição: Uma expressão que resulta em true (verdadeiro) ou false (falso).
+?: Separa a condição do código que será executado se a condição for verdadeira.
+:: Separa o valor verdadeiro do valor que será executado se a condição for falsa.

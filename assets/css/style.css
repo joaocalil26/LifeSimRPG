@@ -1,0 +1,569 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #0d0e15;
+    background-image: 
+    linear-gradient(rgba(0, 255, 55, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 55, 0.05) 1px, transparent 1px);
+    background-size: 30px 30px; /* Tamanho dos quadrados da grelha */
+    background-position: center center;
+/* 1. Largura da barra em todo o site */
+::-webkit-scrollbar {
+    width: 6px;              /* Fina para vertical */
+    height: 6px;             /* Fina para horizontal */
+}
+/* 2. O fundo do canal por onde a barra desliza */
+::-webkit-scrollbar-track {
+    background: #141421;     /* Escuro para combinar com o fundo do jogo */
+}
+/* 3. O ponteiro/pino de arraste */
+::-webkit-scrollbar-thumb {
+    background: #4e54c8;     /* Azul/Roxo estilo gamer */
+    border-radius: 10px;     /* Bordas arredondadas */
+    transition: background 0.2s ease;
+}
+/* 4. Destaque ao passar o rato por cima */
+::-webkit-scrollbar-thumb:hover {
+    background: #2ed573;     /* Verde néon */
+}
+/* Suporte para Firefox (Global) */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #4e54c8 #141421;
+}
+
+}
+
+h1 {
+    color: #222;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    padding: 20px;
+}
+
+.game {
+    width: 600px;
+    height: 600px;
+    background: linear-gradient(180deg, #2b2b2b, #1f1f1f);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+    color: #fff;
+}
+
+/* Agrupamento do topo para manter as barras e textos próximos */
+.header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.top-stats {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.life-container,
+.hungry-container,
+.sleep-container {
+    flex: 1;
+    height: 18px;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.day-container {
+    flex: 1;
+    overflow: hidden;
+}
+
+.day-container p {
+    display: flex;
+    justify-content: flex-end;
+    font-family: "Oswald", sans-serif;
+    font-size: 13px;
+    gap: 4px;
+}
+
+
+.doente-container {
+    flex: 1;
+    overflow: hidden;
+}
+
+.doente-container p {
+    display: flex;
+    justify-content: row;
+    font-family: "Oswald", sans-serif;
+    font-size: 13px;
+    gap: 4px;
+}
+
+
+.life-fill {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, #4cd964, #28a745);
+    transition: width 300ms ease;
+}
+
+.hungry-fill {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, #a4ad19, #fdf911);
+    transition: width 300ms ease;
+}
+
+.sleep-fill {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, #2e42f3, #383bf0);
+    transition: width 300ms ease;
+}
+
+.info {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    color: #ddd;
+    gap: 15px;
+}
+
+.jogo {
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    font-family: "Oswald", sans-serif;
+    color: #00ff37;
+}
+
+.job,
+.money {
+    font-family: "Oswald", sans-serif;
+    display: flex;
+    gap: 4px;
+}
+
+.main-area {
+    flex: 1;
+    width: 100%;
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap; /* Permite que os botões quebrem para a linha de baixo */
+    gap: 8px;
+    justify-content: center;
+}
+
+.actions button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    background-color: #4a90e2;
+    color: white;
+    cursor: pointer;
+}
+
+.actions button:active {
+    transform: translateY(1px);
+}
+
+.titlebarra {
+    color: white;
+    font-size: 12px;
+    font-family: "Oswald", sans-serif;
+    padding-left: 8px;
+    display: inline-block;
+    white-space: nowrap;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8); /* Melhora a leitura sobre as cores das barras */
+}
+
+/* ==========================================================================
+   ESTILOS DO MODAL DE EMPREGOS
+   ========================================================================== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-overlay.hidden {
+    display: none !important;
+}
+
+.modal-container {
+    position: relative;
+    width: 90%;
+    max-width: 450px;
+    background-color: #1e1e2f;
+    border: 3px solid #4e54c8;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    color: #ffffff;
+}
+
+.btn-close-modal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    background-color: #ff4757;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.jobs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 280px;
+    overflow-y: auto;
+    padding-right: 5px;
+    font-family: "Oswald", sans-serif;
+}
+
+.job-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2b2b3d;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #3d3d5c;
+    font-family: "Oswald", sans-serif;
+}
+
+.job-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-family: "Oswald", sans-serif;
+}
+
+.job-title {
+    font-weight: bold;
+    color: #00ff37;
+    font-size: 15px;
+    font-family: "Oswald", sans-serif;
+}
+
+.job-salary {
+    font-size: 13px;
+    color: #ffd700;
+    font-family: "Oswald", sans-serif;
+}
+
+/** */
+.market-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 280px;
+    overflow-y: auto;
+    padding-right: 5px;
+    font-family: "Oswald", sans-serif;
+}
+
+.market-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2b2b3d;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #3d3d5c;
+    font-family: "Oswald", sans-serif;
+}
+
+.market-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-family: "Oswald", sans-serif;
+}
+
+.market-title {
+    font-weight: bold;
+    color: #00ff37;
+    font-size: 15px;
+    font-family: "Oswald", sans-serif;
+}
+
+.market-salary {
+    font-size: 13px;
+    color: #ffd700;
+    font-family: "Oswald", sans-serif;
+}
+
+/** */
+.refrigerator-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 280px;
+    overflow-y: auto;
+    padding-right: 5px;
+    font-family: "Oswald", sans-serif;
+}
+
+.refrigerator-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2b2b3d;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #3d3d5c;
+    font-family: "Oswald", sans-serif;
+}
+
+.refrigerator-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-family: "Oswald", sans-serif;
+}
+
+.refrigerator-title {
+    font-weight: bold;
+    color: #00ff37;
+    font-size: 15px;
+    font-family: "Oswald", sans-serif;
+}
+
+.refrigerator-salary {
+    font-size: 13px;
+    color: #ffd700;
+    font-family: "Oswald", sans-serif;
+}
+
+.btn-candidatar {
+    background-color: #2ed573;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-candidatar:hover {
+    background-color: #26af5f;
+}
+
+.modal-container h2{
+    font-family: "Oswald", sans-serif;
+}
+
+
+#gameover{
+    background-color: rgb(0, 0, 0);
+    color: white;
+    border-radius: 8px;
+    width: 150px;
+    height: 45px;
+    padding: 13px;
+    font-family: "Oswald", sans-serif;
+}
+
+/* Estilos do Mini-Game Modal */
+.minigame-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+    font-family: "Oswald", sans-serif;
+}
+
+.minigame-action-button {
+    background: linear-gradient(90deg,#00ff37,#26af5f);
+    color: #07100a;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: "Oswald", sans-serif;
+    box-shadow: 0 6px 18px rgba(0,255,55,0.12);
+}
+
+.minigame-action-button:active { transform: translateY(1px); }
+
+@media (max-width: 900px) {
+    .modal-container { width: 95%; }
+}
+
+#minigame-instruction{
+    margin-bottom:12px;
+    text-align:center;
+    font-family: "Oswald", sans-serif;
+    padding-top: 5px;
+}
+
+
+.modal-body p{
+     font-family: "Oswald", sans-serif;
+     text-align: center;
+}
+/* ==========================================================================
+   ESTILIZAÇÃO DA LOGO PIXEL ART
+   ========================================================================== */
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-logo-img {
+    height: 50px; /* Ajusta a altura da imagem para caber no topo */
+    width: auto;
+    object-fit: contain;
+    /* Mantém os píxeis nítidos (estilo retro pixel art) */
+    image-rendering: pixelated; 
+    /* Adiciona um efeito de iluminação néon suave ao redor da logo */
+    filter: drop-shadow(0 0 6px rgba(0, 255, 55, 0.5));
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+/* Efeito ao passar o rato por cima da logo */
+.game-logo-img:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 10px rgba(0, 255, 55, 0.8));
+}
+
+/* ==========================================================================
+   ALINHAMENTO CENTRALIZADO E PAINEL ESQUERDO
+   ========================================================================== */
+
+/* Wrapper que segura o Tutorial e o Container lado a lado */
+.game-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;  /* Alinha verticalmente pelo centro */
+    gap: 25px;            /* Espaço entre o tutorial e o jogo */
+    min-height: 70vh;    /* Centraliza na tela toda */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Card do Tutorial (Lado Esquerdo) */
+.tutorial-card {
+    background-color: #222222;
+    border: 1px solid #333333;
+    border-radius: 12px;
+    padding: 20px;
+    width: 280px;
+    height: fit-content;
+    color: #ffffff;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    font-family: 'Oswald', sans-serif;
+}
+
+.tutorial-card h2 {
+    color: #00ff37; /* Verde néon da logo */
+    font-size: 20px;
+    margin-top: 0;
+    margin-bottom: 18px;
+    text-align: center;
+    letter-spacing: 1px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 10px;
+}
+
+.tutorial-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.tutorial-step:last-child {
+    margin-bottom: 0;
+}
+
+.step-icon {
+    font-size: 18px;
+    background: #141414;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tutorial-step strong {
+    display: block;
+    color: #ffffff;
+    font-size: 14px;
+    margin-bottom: 2px;
+}
+
+.tutorial-step p {
+    margin: 0;
+    font-size: 12px;
+    color: #aaa;
+    line-height: 1.3;
+    font-family: Arial, sans-serif; /* Leitura mais limpa nos textos longos */
+}
+
+
+.modal-action-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza o botão e elementos filhos na horizontal */
+    justify-content: center;
+    text-align: center;
+    gap: 4px;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 900px) {
+    .game-wrapper {
+        flex-direction: column;
+        min-height: auto;
+    }
+
+    .tutorial-card {
+        width: 100%;
+        max-width: 500px;
+    }
+}
