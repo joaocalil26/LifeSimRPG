@@ -56,9 +56,15 @@ const tarefasProfissoes = {
         { instr: "🐛 Um bug crítico parou a produção!", label: "Corrigir Código" },
         { instr: "⚙️ Deploy travado, finalize o hotfix.", label: "Aplicar Hotfix" }
     ],
-    Motorista: [{ instr: "🚚 Entrega atrasada, entregue rápido.", label: "Entregar Encomenda" }],
-    Atendente: [{ instr: "🧾 Caixa cheio, organize e feche o turno.", label: "Fechar Caixa" }],
-    Operador: [{ instr: "🔧 Ajuste na máquina principal.", label: "Ajustar Máquina" }]
+    Motorista: [
+        { instr: "🚚 Entrega atrasada, entregue rápido.", label: "Entregar Encomenda" }
+    ],
+    Atendente: [
+        { instr: "🧾 Caixa cheio, organize e feche o turno.", label: "Fechar Caixa" }]
+        ,
+    Operador: [
+        { instr: "🔧 Ajuste na máquina principal.", label: "Ajustar Máquina" }
+    ]
 };
 
 /* --------------------------------------------------------------------------
@@ -198,7 +204,6 @@ function dayUpdate(diaupdate) {
     const dayP = document.querySelector(".dayupdate");
     if (dayP) dayP.textContent = `📆 Dia: ${dia}`;
 }
-
 /* --------------------------------------------------------------------------
    7. SISTEMA DE SAÚDE E DOENÇAS
    -------------------------------------------------------------------------- */
@@ -299,6 +304,7 @@ window.selecionarEmprego = function(cargo, salario) {
         if (!jogoAtivo) return;
         atualizarDinheiro(empregoAtual.salario);
         mostrarNotificacao(`💰 Salário recebido: +R$ ${empregoAtual.salario}`, "#1e90ff");
+        console.log(`💰 Salário recebido: +R$ ${empregoAtual.salario}`);
     }, tempoPagamento);
 
     fecharModal();
@@ -306,6 +312,11 @@ window.selecionarEmprego = function(cargo, salario) {
 
 /* --------------------------------------------------------------------------
    9. MINIGAME DE TRABALHO
+               <div class="job-container" aria-label="Jobing">
+                            <div class="Jobing" id="Jobing" style="width: 0%;">
+                                <span class="titlebarrajob" id="Jobingbar"></span>
+                            </div>
+                        </div>
    -------------------------------------------------------------------------- */
 function abrirMinigameTrabalho() {
     if (!jogoAtivo) return;
@@ -323,30 +334,119 @@ function abrirMinigameTrabalho() {
 
     const tarefa = lista[Math.floor(Math.random() * lista.length)];
     const valorRecompensa = recompensa[Math.floor(Math.random() * recompensa.length)];
+    
+    const tempoTotal = tarefa.tempo || Math.floor(Math.random() * 3000) + 2000;
 
     abrirModal("💼 Tarefa do Trabalho", `
         <div class="modal-action-content">
             <p>${tarefa.instr}</p>
+
+            <div class="job-container">
+                <div class="Jobing" id="Jobing" style="width: 0%;">
+                    <span class="titlebarrajob" id="Jobingbar">0%</span>
+                </div>
+            </div>
+
             <button id="btnConcluirTarefa" class="minigame-action-button">${tarefa.label}</button>
         </div>
     `);
 
     const btn = document.getElementById("btnConcluirTarefa");
     if (btn) {
-        btn.addEventListener("click", () => concluirMinigame(valorRecompensa));
+        btn.addEventListener("click", () => iniciarTrabalho(tempoTotal, valorRecompensa));
     }
+}
+
+function iniciarTrabalho(tempoTotal, valorRecompensa) {
+    const btn = document.getElementById("btnConcluirTarefa");
+    const barra = document.getElementById("Jobing");
+    const textoBarra = document.getElementById("Jobingbar");
+    const modalGame = document.getElementById("modalJogo");
+
+    if (!btn || !barra || !textoBarra) return;
+
+    btn.disabled = true;
+    btn.style.opacity = "0.5";
+    btn.style.cursor = "not-allowed";
+
+    let progresso = 0;
+    const taxaAtualizacao = 50;
+    const incremento = (taxaAtualizacao / tempoTotal) * 100;
+
+    // 2. INICIA O LOOP DA BARRA DE PROGRESSO
+    const temporizador = setInterval(() => {
+        progresso += incremento;
+
+        if (progresso >= 100 ) {
+            progresso = 100;
+            clearInterval(temporizador); 
+            btn.disabled = false;
+            btn.style.opacity = "1";
+            btn.style.cursor = "pointer";
+
+            barra.style.width = "100%";
+            textoBarra.textContent = "100%";
+
+            setTimeout(() => {
+                concluirMinigame(valorRecompensa);
+            }, 300);
+        } else {
+            
+            barra.style.width = Math.floor(progresso) + "%";
+            textoBarra.textContent = "" + Math.floor(progresso) + "%";
+        }
+    }, taxaAtualizacao);
+}
+
+function mudarTarefa() {
+    const lista = tarefasProfissoes[empregoAtual.cargo];
+    if (!lista || lista.length === 0) return;
+
+    const novaTarefa = lista[Math.floor(Math.random() * lista.length)];
+    const novaRecompensa = recompensa[Math.floor(Math.random() * recompensa.length)];
+    const novoTempo = novaTarefa.tempo || Math.floor(Math.random() * 3000) + 2000;
+
+    const paragrafoInstr = document.querySelector(".modal-action-content p");
+    const btn = document.getElementById("btnConcluirTarefa");
+    const barra = document.getElementById("Jobing");
+    const textoBarra = document.getElementById("Jobingbar");
+
+    if (paragrafoInstr) paragrafoInstr.textContent = novaTarefa.instr;
+    if (btn) {
+        btn.textContent = novaTarefa.label;
+        btn.disabled = false;
+        btn.style.opacity = "1";
+        btn.style.cursor = "pointer";
+
+        // 4. Substitui o evento de clique para a nova tarefa
+        // (usamos cloneNode para limpar eventos antigos do botão)
+        const novoBtn = btn.cloneNode(true);
+        btn.parentNode.replaceChild(novoBtn, btn);
+
+        novoBtn.addEventListener("click", () => iniciarTrabalho(novoTempo, novaRecompensa));
+    }
+
+    if (barra) barra.style.width = "0%";
+    if (textoBarra) textoBarra.textContent = "0%";
 }
 
 function concluirMinigame(valorRecompensa) {
     if (!jogoAtivo) return;
+    
+    // Verifica se o modal está fechado
+    const modal = document.getElementById("modalJogo");
+    if (modal && modal.classList.contains("hidden")) {
+        mostrarNotificacao(`Você saiu do trabalho no meio da atividade e ficou sem receber.`, `#FF0000`);
+        return;
+    }
 
     atualizarDinheiro(valorRecompensa);
-    atualizarBarra("hungryFill", -1);
-    atualizarBarra("sleepFill", -1);
-
+    atualizarBarra("hungryFill", -3);
+    atualizarBarra("sleepFill", -3);
+    mudarTarefa();
     mostrarNotificacao(`💸 Você ganhou R$ ${valorRecompensa}`, "#00c853");
-    fecharModal();
 }
+
 
 /* --------------------------------------------------------------------------
    10. SISTEMA DE MERCADO
@@ -492,7 +592,7 @@ function abrirDormir() {
 window.confirmarDormir = function() {
     if (!jogoAtivo) return;
     descansar();
-    mostrarNotificacao("😴 Você descansou!", "#4211c9");
+    mostrarNotificacao("😴 Você descansou! (+2 sono)", "#4211c9");
 };
 
 function abrirLoja() {
@@ -595,8 +695,11 @@ setInterval(() => {
         atualizarBarra("lifeFill", -2);
     } else if (statusJogo.sleepFill <= 0) {
         atualizarBarra("lifeFill", -1);
+    } else if (statusJogo.hungryFill >= 50 && statusJogo.sleepFill >= 50 && doencaAtual.impacto === 0){
+        atualizarBarra("lifeFill", 1);
+        console.log("Sua vida esta subindo")
     }
-}, 1000);
+}, 3000);
 
 // Passagem do Tempo (1 dia a cada 15 minutos)
 setInterval(() => {

@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
 
+/* ==========================================================================
+   RESET E CONFIGURAÇÕES GERAIS
+   ========================================================================== */
 * {
     margin: 0;
     padding: 0;
@@ -7,77 +10,144 @@
 }
 
 body {
-    background-color: #0d0e15;
+    background-color: #0b0c10;
     background-image: 
-    linear-gradient(rgba(0, 255, 55, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 255, 55, 0.05) 1px, transparent 1px);
-    background-size: 30px 30px; /* Tamanho dos quadrados da grelha */
+        linear-gradient(rgba(0, 255, 55, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 55, 0.05) 1px, transparent 1px);
+    background-size: 24px 24px;
     background-position: center center;
-/* 1. Largura da barra em todo o site */
+    font-family: 'Oswald', sans-serif;
+    color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Scrollbar Personalizada */
 ::-webkit-scrollbar {
-    width: 6px;              /* Fina para vertical */
-    height: 6px;             /* Fina para horizontal */
+    width: 6px;
+    height: 6px;
 }
-/* 2. O fundo do canal por onde a barra desliza */
 ::-webkit-scrollbar-track {
-    background: #141421;     /* Escuro para combinar com o fundo do jogo */
+    background: #141421;
 }
-/* 3. O ponteiro/pino de arraste */
 ::-webkit-scrollbar-thumb {
-    background: #4e54c8;     /* Azul/Roxo estilo gamer */
-    border-radius: 10px;     /* Bordas arredondadas */
+    background: #4e54c8;
+    border-radius: 10px;
     transition: background 0.2s ease;
 }
-/* 4. Destaque ao passar o rato por cima */
 ::-webkit-scrollbar-thumb:hover {
-    background: #2ed573;     /* Verde néon */
+    background: #2ed573;
 }
-/* Suporte para Firefox (Global) */
 * {
     scrollbar-width: thin;
     scrollbar-color: #4e54c8 #141421;
 }
 
-}
-
-h1 {
-    color: #222;
-}
-
+/* ==========================================================================
+   LAYOUT PRINCIPAL
+   ========================================================================== */
 .container {
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 80vh;
-    padding: 20px;
+    padding: 20px 10px;
 }
 
+.game-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    width: 100%;
+    max-width: 1100px;
+}
+
+/* ==========================================================================
+   TUTORIAL (PAINEL ESQUERDO)
+   ========================================================================== */
+.tutorial-card {
+    background-color: #1a1a1a;
+    border-radius: 16px;
+    padding: 24px;
+    width: 300px;
+    flex-shrink: 0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.tutorial-card h2 {
+    color: #00ff37;
+    font-size: 22px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Oswald', sans-serif;
+}
+
+.tutorial-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.step-icon {
+    font-size: 20px;
+    background: #262626;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.tutorial-step strong {
+    display: block;
+    color: #ffffff;
+    font-size: 15px;
+    margin-bottom: 2px;
+}
+
+.tutorial-step p {
+    margin: 0;
+    font-size: 12px;
+    color: #a0a0a0;
+    line-height: 1.3;
+    font-family: Arial, sans-serif;
+}
+
+/* ==========================================================================
+   ÁREA DO JOGO (PAINEL DIREITO)
+   ========================================================================== */
 .game {
-    width: 600px;
-    height: 600px;
-    background: linear-gradient(180deg, #2b2b2b, #1f1f1f);
+    width: 100%;
+    max-width: 650px;
+    min-height: 600px;
+    background-color: #1e1e1e;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
-    color: #fff;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
 }
 
-/* Agrupamento do topo para manter as barras e textos próximos */
 .header {
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 15px;
 }
 
+/* Barras do Topo */
 .top-stats {
     width: 100%;
     display: flex;
-    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
     gap: 10px;
 }
 
@@ -85,123 +155,149 @@ h1 {
 .hungry-container,
 .sleep-container {
     flex: 1;
-    height: 18px;
-    background: rgba(255, 255, 255, 0.12);
-    border-radius: 10px;
+    height: 22px;
+    background: #333333;
+    border-radius: 12px;
     overflow: hidden;
+    position: relative;
 }
-
-.day-container {
-    flex: 1;
-    overflow: hidden;
-}
-
-.day-container p {
-    display: flex;
-    justify-content: flex-end;
-    font-family: "Oswald", sans-serif;
-    font-size: 13px;
-    gap: 4px;
-}
-
-
-.doente-container {
-    flex: 1;
-    overflow: hidden;
-}
-
-.doente-container p {
-    display: flex;
-    justify-content: row;
-    font-family: "Oswald", sans-serif;
-    font-size: 13px;
-    gap: 4px;
-}
-
 
 .life-fill {
     height: 100%;
-    width: 100%;
-    background: linear-gradient(90deg, #4cd964, #28a745);
+    background: #2ed573;
     transition: width 300ms ease;
 }
 
 .hungry-fill {
     height: 100%;
-    width: 100%;
-    background: linear-gradient(90deg, #a4ad19, #fdf911);
+    background: #eccc68;
     transition: width 300ms ease;
 }
 
 .sleep-fill {
     height: 100%;
-    width: 100%;
-    background: linear-gradient(90deg, #2e42f3, #383bf0);
+    background: #3742fa;
     transition: width 300ms ease;
 }
 
+.titlebarra {
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    padding-left: 8px;
+    line-height: 22px;
+    display: block;
+    white-space: nowrap;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.doente-container,
+.day-container {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.doente-container p,
+.day-container p {
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+/* Informações do Jogador */
 .info {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 14px;
-    color: #ddd;
-    gap: 15px;
+    gap: 20px;
+    font-size: 16px;
+    padding: 10px 0;
 }
 
-.jogo {
+.money, .job {
     display: flex;
     align-items: center;
-    font-size: 15px;
-    font-family: "Oswald", sans-serif;
-    color: #00ff37;
+    gap: 5px;
 }
 
-.job,
-.money {
-    font-family: "Oswald", sans-serif;
-    display: flex;
-    gap: 4px;
+.game-logo-img {
+    height: 50px;
+    width: auto;
+    object-fit: contain;
+    image-rendering: pixelated;
+    filter: drop-shadow(0 0 6px rgba(0, 255, 55, 0.4));
 }
 
+/* ==========================================================================
+   ÁREA DE AÇÕES
+   ========================================================================== */
 .main-area {
     flex: 1;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
 }
 
 .actions {
     display: flex;
-    flex-wrap: wrap; /* Permite que os botões quebrem para a linha de baixo */
-    gap: 8px;
-    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+    width: 120px; /* Largura idêntica à imagem */
 }
 
 .actions button {
-    padding: 8px 12px;
+    padding: 10px 14px;
     border: none;
-    border-radius: 6px;
-    background-color: #4a90e2;
+    border-radius: 8px;
+    background-color: #3867d6;
     color: white;
+    font-family: 'Oswald', sans-serif;
+    font-size: 14px;
     cursor: pointer;
+    text-align: center;
+    transition: background-color 0.2s, transform 0.1s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.actions button:hover {
+    background-color: #4b7bec;
 }
 
 .actions button:active {
     transform: translateY(1px);
 }
 
-.titlebarra {
+/* Screen Game Over */
+#gameOverScreen {
+    width: 100%;
+    margin-top: 20px;
+    background: rgba(0, 0, 0, 0.85);
+    border: 2px solid #ff4757;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+#gameover {
+    background-color: #ff4757;
     color: white;
-    font-size: 12px;
-    font-family: "Oswald", sans-serif;
-    padding-left: 8px;
-    display: inline-block;
-    white-space: nowrap;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8); /* Melhora a leitura sobre as cores das barras */
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+#gameover:hover {
+    background-color: #ff6b81;
 }
 
 /* ==========================================================================
-   ESTILOS DO MODAL DE EMPREGOS
+   MODAIS
    ========================================================================== */
 .modal-overlay {
     position: fixed;
@@ -209,12 +305,13 @@ h1 {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.75);
+    background-color: rgba(0, 0, 0, 0.8);
     backdrop-filter: blur(4px);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    padding: 15px;
 }
 
 .modal-overlay.hidden {
@@ -223,347 +320,365 @@ h1 {
 
 .modal-container {
     position: relative;
-    width: 90%;
+    width: 100%;
     max-width: 450px;
     background-color: #1e1e2f;
-    border: 3px solid #4e54c8;
+    border: 2px solid #4e54c8;
     border-radius: 12px;
     padding: 20px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-    color: #ffffff;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
 }
 
 .btn-close-modal {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 12px;
+    right: 12px;
     width: 30px;
     height: 30px;
     background-color: #ff4757;
-    border: 2px solid #fff;
+    border: none;
     border-radius: 50%;
     color: #fff;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.jobs-list {
+.jobs-list, .market-list, .refrigerator-list {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    max-height: 280px;
+    max-height: 300px;
     overflow-y: auto;
     padding-right: 5px;
-    font-family: "Oswald", sans-serif;
 }
 
-.job-card {
+.job-card, .market-card, .refrigerator-card {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #2b2b3d;
-    padding: 10px 14px;
+    padding: 12px;
     border-radius: 8px;
     border: 1px solid #3d3d5c;
-    font-family: "Oswald", sans-serif;
-}
-
-.job-info {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    font-family: "Oswald", sans-serif;
-}
-
-.job-title {
-    font-weight: bold;
-    color: #00ff37;
-    font-size: 15px;
-    font-family: "Oswald", sans-serif;
-}
-
-.job-salary {
-    font-size: 13px;
-    color: #ffd700;
-    font-family: "Oswald", sans-serif;
-}
-
-/** */
-.market-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    max-height: 280px;
-    overflow-y: auto;
-    padding-right: 5px;
-    font-family: "Oswald", sans-serif;
-}
-
-.market-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #2b2b3d;
-    padding: 10px 14px;
-    border-radius: 8px;
-    border: 1px solid #3d3d5c;
-    font-family: "Oswald", sans-serif;
-}
-
-.market-info {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    font-family: "Oswald", sans-serif;
-}
-
-.market-title {
-    font-weight: bold;
-    color: #00ff37;
-    font-size: 15px;
-    font-family: "Oswald", sans-serif;
-}
-
-.market-salary {
-    font-size: 13px;
-    color: #ffd700;
-    font-family: "Oswald", sans-serif;
-}
-
-/** */
-.refrigerator-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    max-height: 280px;
-    overflow-y: auto;
-    padding-right: 5px;
-    font-family: "Oswald", sans-serif;
-}
-
-.refrigerator-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #2b2b3d;
-    padding: 10px 14px;
-    border-radius: 8px;
-    border: 1px solid #3d3d5c;
-    font-family: "Oswald", sans-serif;
-}
-
-.refrigerator-info {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    font-family: "Oswald", sans-serif;
-}
-
-.refrigerator-title {
-    font-weight: bold;
-    color: #00ff37;
-    font-size: 15px;
-    font-family: "Oswald", sans-serif;
-}
-
-.refrigerator-salary {
-    font-size: 13px;
-    color: #ffd700;
-    font-family: "Oswald", sans-serif;
 }
 
 .btn-candidatar {
     background-color: #2ed573;
-    color: white;
+    color: #000;
     border: none;
-    padding: 6px 12px;
+    padding: 8px 14px;
     border-radius: 6px;
     font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.btn-candidatar:hover {
-    background-color: #26af5f;
-}
-
-.modal-container h2{
-    font-family: "Oswald", sans-serif;
-}
-
-
-#gameover{
-    background-color: rgb(0, 0, 0);
-    color: white;
-    border-radius: 8px;
-    width: 150px;
-    height: 45px;
-    padding: 13px;
-    font-family: "Oswald", sans-serif;
-}
-
-/* Estilos do Mini-Game Modal */
-.minigame-area {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-    padding: 10px;
-    font-family: "Oswald", sans-serif;
-}
-
-.minigame-action-button {
-    background: linear-gradient(90deg,#00ff37,#26af5f);
-    color: #07100a;
-    border: none;
-    padding: 10px 14px;
-    border-radius: 8px;
-    font-weight: 700;
-    cursor: pointer;
-    font-family: "Oswald", sans-serif;
-    box-shadow: 0 6px 18px rgba(0,255,55,0.12);
-}
-
-.minigame-action-button:active { transform: translateY(1px); }
-
-@media (max-width: 900px) {
-    .modal-container { width: 95%; }
-}
-
-#minigame-instruction{
-    margin-bottom:12px;
-    text-align:center;
-    font-family: "Oswald", sans-serif;
-    padding-top: 5px;
-}
-
-
-.modal-body p{
-     font-family: "Oswald", sans-serif;
-     text-align: center;
-}
-/* ==========================================================================
-   ESTILIZAÇÃO DA LOGO PIXEL ART
-   ========================================================================== */
-.logo-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.game-logo-img {
-    height: 50px; /* Ajusta a altura da imagem para caber no topo */
-    width: auto;
-    object-fit: contain;
-    /* Mantém os píxeis nítidos (estilo retro pixel art) */
-    image-rendering: pixelated; 
-    /* Adiciona um efeito de iluminação néon suave ao redor da logo */
-    filter: drop-shadow(0 0 6px rgba(0, 255, 55, 0.5));
-    transition: transform 0.2s ease, filter 0.2s ease;
-}
-
-/* Efeito ao passar o rato por cima da logo */
-.game-logo-img:hover {
-    transform: scale(1.05);
-    filter: drop-shadow(0 0 10px rgba(0, 255, 55, 0.8));
-}
-
-/* ==========================================================================
-   ALINHAMENTO CENTRALIZADO E PAINEL ESQUERDO
-   ========================================================================== */
-
-/* Wrapper que segura o Tutorial e o Container lado a lado */
-.game-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;  /* Alinha verticalmente pelo centro */
-    gap: 25px;            /* Espaço entre o tutorial e o jogo */
-    min-height: 70vh;    /* Centraliza na tela toda */
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-/* Card do Tutorial (Lado Esquerdo) */
-.tutorial-card {
-    background-color: #222222;
-    border: 1px solid #333333;
-    border-radius: 12px;
-    padding: 20px;
-    width: 280px;
-    height: fit-content;
-    color: #ffffff;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
     font-family: 'Oswald', sans-serif;
+    cursor: pointer;
 }
 
-.tutorial-card h2 {
-    color: #00ff37; /* Verde néon da logo */
-    font-size: 20px;
-    margin-top: 0;
-    margin-bottom: 18px;
-    text-align: center;
-    letter-spacing: 1px;
-    border-bottom: 1px solid #333;
-    padding-bottom: 10px;
-}
+/* ==========================================================================
+   RESPONSIVIDADE (MEDIA QUERIES)
+   ========================================================================== */
 
-.tutorial-step {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    margin-bottom: 16px;
-}
-
-.tutorial-step:last-child {
-    margin-bottom: 0;
-}
-
-.step-icon {
-    font-size: 18px;
-    background: #141414;
-    padding: 8px;
-    border-radius: 8px;
-    border: 1px solid #333;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.tutorial-step strong {
-    display: block;
-    color: #ffffff;
-    font-size: 14px;
-    margin-bottom: 2px;
-}
-
-.tutorial-step p {
-    margin: 0;
-    font-size: 12px;
-    color: #aaa;
-    line-height: 1.3;
-    font-family: Arial, sans-serif; /* Leitura mais limpa nos textos longos */
-}
-
-
-.modal-action-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Centraliza o botão e elementos filhos na horizontal */
-    justify-content: center;
-    text-align: center;
-    gap: 4px;
-}
-
-/* Responsividade para telas menores */
+/* Tablets / Telas Médias */
 @media (max-width: 900px) {
     .game-wrapper {
         flex-direction: column;
-        min-height: auto;
+        align-items: center;
     }
 
     .tutorial-card {
         width: 100%;
-        max-width: 500px;
+        max-width: 650px;
     }
+}
+
+/* Smartphones / Dispositivos Móveis */
+@media (max-width: 600px) {
+    .container {
+        padding: 10px 5px;
+    }
+
+    .game {
+        padding: 15px;
+        min-height: auto;
+    }
+
+    .top-stats {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .life-container, .hungry-container, .sleep-container {
+        min-width: 30%;
+    }
+
+    .info {
+        font-size: 13px;
+        gap: 10px;
+    }
+
+    .game-logo-img {
+        height: 38px;
+    }
+
+    .actions {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+
+    .actions button {
+        width: 100%;
+        padding: 12px;
+        font-size: 15px;
+    }
+}
+
+/* ==========================================================================
+   ESTILOS ESPECÍFICOS PARA MINIJOGOS E TAREFAS DENTRO DO MODAL
+   ========================================================================== */
+
+/* Botão de ação verde néon estilizado igual à referência da imagem */
+.minigame-action-button, 
+.modal-body button:not(.btn-candidatar) {
+    background: linear-gradient(180deg, #00ff55, #00b33c);
+    color: #000000;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 10px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 255, 85, 0.4);
+    transition: transform 0.1s ease, filter 0.2s ease, box-shadow 0.2s ease;
+    margin-top: 12px;
+    display: inline-block;
+}
+
+.minigame-action-button:hover,
+.modal-body button:not(.btn-candidatar):hover {
+    filter: brightness(1.1);
+    box-shadow: 0 6px 20px rgba(0, 255, 85, 0.6);
+}
+
+.minigame-action-button:active,
+.modal-body button:not(.btn-candidatar):active {
+    transform: scale(0.97);
+}
+
+/* Centralização do conteúdo de tarefas no Modal */
+.minigame-area, 
+.modal-action-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 12px;
+    padding: 10px 0;
+}
+
+/* Botão de Fechar Modal (X Vermelho com Borda Branca) */
+.btn-close-modal {
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    width: 32px;
+    height: 32px;
+    background: #ff4757;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    transition: transform 0.2s ease;
+}
+
+.btn-close-modal:hover {
+    transform: scale(1.1);
+}
+
+/* Barra/Container de Progresso do Minijogo (%) */
+.job-container {
+    width: 100%;
+    max-width: 280px;
+    height: 24px;
+    background-color: #2a2a38;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 8px 0;
+    border: 1px solid #3d3d5c;
+}
+
+.Jobing {
+    height: 100%;
+    background: linear-gradient(90deg, #4e54c8, #2ed573);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: width 0.2s ease;
+}
+
+.titlebarrajob {
+    color: #ffffff;
+    font-size: 13px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* ==========================================================================
+   ESTILOS DOS ELEMENTOS DINÂMICOS DO SCRIPT.JS
+   ========================================================================== */
+
+/* Layout Centralizado dos Modais e Ações */
+.modal-action-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 12px;
+    padding: 10px 0;
+}
+
+.modal-action-content p {
+    margin: 0;
+    font-size: 16px;
+}
+
+/* Listas dos Modais (Empregos, Mercado, Geladeira e Loja) */
+.jobs-list,
+.market-list,
+.refrigerator-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 350px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+.jobs-list-title,
+.market-list-title,
+.refrigerator-list-title {
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+/* Cartões de Item / Vaga (Cards) */
+.job-card,
+.market-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 12px 16px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.job-card:hover,
+.market-card:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.job-info,
+.market-info {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    gap: 4px;
+}
+
+.job-title,
+.market-title {
+    font-weight: bold;
+    font-size: 16px;
+    color: #00ff55;
+}
+
+.job-salary,
+.market-salary {
+    font-size: 14px;
+    color: #ffcc00;
+}
+
+/* Botão de Ação Verde Néon (Minijogos, Refeição, Ações de Modal) */
+.minigame-action-button {
+    background: linear-gradient(180deg, #00ff55, #00b33c);
+    color: #000000;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 10px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 255, 85, 0.4);
+    transition: transform 0.1s ease, filter 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+    margin-top: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.minigame-action-button:hover:not(:disabled) {
+    filter: brightness(1.1);
+    box-shadow: 0 6px 20px rgba(0, 255, 85, 0.6);
+}
+
+.minigame-action-button:active:not(:disabled) {
+    transform: scale(0.97);
+}
+
+.minigame-action-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* Container e Barra de Progresso do Trabalho (%) */
+.job-container {
+    width: 100%;
+    max-width: 280px;
+    height: 24px;
+    background-color: #2a2a38;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 8px 0;
+    border: 1px solid #3d3d5c;
+}
+
+.Jobing {
+    height: 100%;
+    background: linear-gradient(90deg, #4e54c8, #2ed573);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: width 0.1s linear;
+}
+
+.titlebarrajob {
+    color: #ffffff;
+    font-size: 13px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* Estado de Geladeira Vazia */
+.refrigerator-empty {
+    text-align: center;
+    padding: 20px;
 }
